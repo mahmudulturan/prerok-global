@@ -19,7 +19,7 @@ require("./configs/database");
 app.use(express.json());
 app.use(
   cors({
-    origin: ["http://localhost:5173", "https://prerokglobal.web.app", "https://prerok-global-frontend.vercel.app"],
+    origin: ["http://localhost:5173", "https://prerok-global-frontend.vercel.app"],
     credentials: true,
   })
 );
@@ -38,5 +38,10 @@ app.use("/api/testimonials", testimonialRoutes)
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello World!");
 });
+
+
+app.get('/err', (req: Request, res: Response) => {
+  res.send('error');
+})
 
 module.exports = app;
