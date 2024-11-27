@@ -19,7 +19,7 @@ require("./configs/database");
 app.use(express.json());
 app.use(
   cors({
-    origin: ["http://localhost:5173", "https://prerokglobal.web.app"],
+    origin: ["http://localhost:5173", "https://prerokglobal.web.app", "https://prerok-global-frontend.vercel.app"],
     credentials: true,
   })
 );
