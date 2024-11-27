@@ -15,13 +15,23 @@ var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (
 }) : function(o, v) {
     o["default"] = v;
 });
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
+var __importStar = (this && this.__importStar) || (function () {
+    var ownKeys = function(o) {
+        ownKeys = Object.getOwnPropertyNames || function (o) {
+            var ar = [];
+            for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) ar[ar.length] = k;
+            return ar;
+        };
+        return ownKeys(o);
+    };
+    return function (mod) {
+        if (mod && mod.__esModule) return mod;
+        var result = {};
+        if (mod != null) for (var k = ownKeys(mod), i = 0; i < k.length; i++) if (k[i] !== "default") __createBinding(result, mod, k[i]);
+        __setModuleDefault(result, mod);
+        return result;
+    };
+})();
 Object.defineProperty(exports, "__esModule", { value: true });
 const nodemailer = __importStar(require("nodemailer"));
 const Booking = require("../models/booking.model");
@@ -107,7 +117,7 @@ exports.updateTrackingStatus = async (req, res) => {
                     name: "Prerok Global",
                     address: gmailUser
                 },
-                to: bookingData.bookingEmail,
+                to: [bookingData.bookingEmail, bookingData.fromAddress?.from_email, bookingData.toAddress?.to_email],
                 subject: 'Prerok Global Tracking Update',
                 text: `Hello ${bookingData.fromAddress?.from_name},\n\nWe have some update regarding your booking.`,
                 html: `<p><b>Hello ${bookingData.fromAddress?.from_name},</b></p>
@@ -179,14 +189,14 @@ exports.createBooking = async (req, res) => {
                     name: "Prerok Global",
                     address: gmailUser
                 },
-                to: bookingData.bookingEmail,
+                to: [bookingData.bookingEmail, bookingData.fromAddress?.from_email, bookingData.toAddress?.to_email],
                 subject: 'Booking Confirmed - Prerok Global',
                 text: `Hello ${bookingData.fromAddress?.from_name},\n\nThank you for choosing Prerok Global! Your booking has been confirmed. We kindly request you to drop off your product at the nearest hub.`,
                 html: `<p><b>Hello ${bookingData.fromAddress?.from_name},</b></p>
                        <p>Thank you for choosing Prerok Global! We are excited to inform you that your booking has been successfully confirmed.</p>
                        <div style="display: flex; justify-content: space-between;">
                        <div style="width: 48%;">
-                       <b>Your Tracking Number:</b> <span>${bookingData._id}</span>
+                       <b>Your Tracking Number:</b> <span>${result._id}</span>
                        <p><b>From Address:</b></p>
                        <ul>
                            <li><b>Name:</b> ${bookingData.fromAddress?.from_name}</li>

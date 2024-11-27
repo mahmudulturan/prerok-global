@@ -17,7 +17,7 @@ require("./configs/database");
 //middlewares
 app.use(express.json());
 app.use(cors({
-    origin: ["http://localhost:5173", "https://prerokglobal.web.app"],
+    origin: ["http://localhost:5173", "https://prerok-global-frontend.vercel.app"],
     credentials: true,
 }));
 app.use(cookieParser());
@@ -32,5 +32,8 @@ app.use("/api/forum", forumRoutes);
 app.use("/api/testimonials", testimonialRoutes);
 app.get("/", (req, res) => {
     res.send("Hello World!");
+});
+app.get('/err', (req, res) => {
+    res.send('error');
 });
 module.exports = app;
